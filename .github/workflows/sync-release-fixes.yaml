@@ -32,11 +32,13 @@ jobs:
       
       - name: create pull request
         run: |
+          echo "# Description" >> body
+          echo "" >> body
+          echo "Syncing #${{ github.event.pull_request.number }} to main branch" >> body
+          
           gh pr create \
           --title 'chore: sync #${{ github.event.pull_request.number }} to main branch' \
-          --body '# Description' \
-          --body '' \
-          --body 'Syncing #${{ github.event.pull_request.number }} to main branch' \
+          --body "$(cat body)"
           --base main \
           --head $PR_BRANCH \
           --assignee "${{ github.event.pull_request.user.login }}" \
