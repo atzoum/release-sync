@@ -9,7 +9,7 @@ jobs:
   sync:
     env:
       GH_TOKEN: ${{ secrets.PAT }}
-    if: ${{ github.event.pull_request.merged && startsWith(github.event.pull_request.base.ref, 'release/') && ! startsWith(github.event.pull_request.title, 'chore: release') }}
+    if: "${{ github.event.pull_request.merged && startsWith(github.event.pull_request.base.ref, 'release/') && ! startsWith(github.event.pull_request.title, 'chore: release') }}"
     runs-on: ubuntu-latest
 
     steps:
