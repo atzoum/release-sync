@@ -25,6 +25,11 @@ jobs:
       
       - name: parse release tag
         run: |
+          while [ -n $(git describe --contains $MERGE_COMMIT_SHA && "ok" || "") ]; do
+            echo "waiting for release...";
+            sleep 2
+            git fetch --tags
+          done;
           RELEASE_TAG=$(git describe --contains $MERGE_COMMIT_SHA)
           echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
       
