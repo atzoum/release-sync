@@ -1,4 +1,4 @@
-name: Sync release fixes to main branch
+name: Sync release fix commits to main branch
 
 on:
   pull_request:
@@ -9,34 +9,38 @@ jobs:
   sync:
     env:
       GH_TOKEN: ${{ secrets.PAT }}
-    if: "github.event.pull_request.merged && startsWith(github.event.pull_request.base.ref, 'release/') && !startsWith(github.event.pull_request.title, 'chore: release')"
+    if: "${{ github.event.pull_request.merged && startsWith(github.event.pull_request.base.ref, 'release/') && ! startsWith(github.event.pull_request.title, 'chore: release') }}"
     runs-on: ubuntu-latest
 
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: parse commit
         run: |
           MERGE_COMMIT_SHA=$(gh pr view ${{ github.event.pull_request.number }} --json mergeCommit -q .mergeCommit.oid)
           echo "MERGE_COMMIT_SHA=$MERGE_COMMIT_SHA" >> "$GITHUB_ENV"
       
-      - name: checkout commit
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ env.MERGE_COMMIT_SHA }}
-          fetch-depth: 0
-      
       - name: create branch
         run: |
           PR_BRANCH="sync-release-fixes-${MERGE_COMMIT_SHA}"
           echo "PR_BRANCH=$PR_BRANCH" >> "$GITHUB_ENV"
-          git checkout -b $PR_BRANCH
+          git checkout $MERGE_COMMIT_SHA -b $PR_BRANCH
           git push origin $PR_BRANCH
       
       - name: create pull request
         run: |
+          echo "# Description" >> body
+          echo "" >> body
+          echo "Syncing #${{ github.event.pull_request.number }} from ${{github.event.pull_request.base.ref}} to main branch" >> body
+          echo "" >> body
+          
           gh pr create \
-            --title "chore: sync #${{ github.event.pull_request.number }} to main branch" \
-            --body "# Description\n\nSyncing #${{ github.event.pull_request.number }} to main branch"\
-            --base main \
-            --head $PR_BRANCH \
-            --assignee "${{ github.event.pull_request.user.login }}" \
-            --label "Enable Test"
+          --title "chore: sync #${{ github.event.pull_request.number }} from ${{github.event.pull_request.base.ref}} to main branch" \
+          --body "$(cat body)" \
+          --base main \
+          --head $PR_BRANCH \
+          --assignee "${{ github.event.pull_request.user.login }}" \
+          --label "Enable Test"

@@ -9,10 +9,15 @@ jobs:
   sync:
     env:
       GH_TOKEN: ${{ secrets.PAT }}
-    if: "github.event.pull_request.merged && startsWith(github.event.pull_request.base.ref, 'release/') && startsWith(github.event.pull_request.title, 'chore: release')"
+    if: "${{ github.event.pull_request.merged && startsWith(github.event.pull_request.base.ref, 'release/') && startsWith(github.event.pull_request.title, 'chore: release') }}"
     runs-on: ubuntu-latest
 
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
       - name: parse commit
         run: |
           MERGE_COMMIT_SHA=$(gh pr view ${{ github.event.pull_request.number }} --json mergeCommit -q .mergeCommit.oid)
@@ -20,42 +25,65 @@ jobs:
       
       - name: parse release tag
         run: |
+          while [ -n $(git describe --contains $MERGE_COMMIT_SHA && echo "ok" || echo "") ]; do
+            echo "waiting for release...";
+            sleep 2
+            git fetch --tags
+          done;
           RELEASE_TAG=$(git describe --contains $MERGE_COMMIT_SHA)
           echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
-      
-      - name: checkout commit
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ env.MERGE_COMMIT_SHA }}
-          fetch-depth: 0
       
       - name: create branch
         run: |
           PR_BRANCH="sync-release-fixes-${MERGE_COMMIT_SHA}"
           echo "PR_BRANCH=$PR_BRANCH" >> "$GITHUB_ENV"
-          git checkout -b $PR_BRANCH
+          git checkout $MERGE_COMMIT_SHA -b $PR_BRANCH
           git push origin $PR_BRANCH
       
       - name: create pull request for major or minor release
-        if: "endsWith(env.RELEASE_TAG, '.0')"
+        if: ${{ endsWith(env.RELEASE_TAG, '.0') }}
         run: |
-          COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only ${PR_BRANCH}...origin/main |grep -v "commit")
+          COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only ${PR_BRANCH}...origin/main | grep -v "commit" | grep -v "chore: sync #")
+          
+          echo "# Description" >> body
+          echo "" >> body
+          echo "Syncing release ${RELEASE_TAG} to main branch" >> body
+          echo "" >> body
+          echo "**WARNING: Do NOT rewrite git history and ALWAYS use a \"Merge Commit\" for merging!*" >> body
+          echo "" >> body
+          echo "**↓↓ Please review and edit commit overrides before merging ↓↓**" >> body
+          echo "" >> body
+          echo "BEGIN_COMMIT_OVERRIDE" >> body
+          echo "${COMMIT_OVERRIDE}" >> body
+          echo "END_COMMIT_OVERRIDE" >> body
+          
           gh pr create \
-            --title "chore: sync release ${RELEASE_NUMBER} to main branch" \
-            --body "# Description\n\nSyncing release ${RELEASE_NUMBER} to main branch\n\n**WARNING:** this needs to be merged using a **Merge Commit**\n\nBEGIN_COMMIT_OVERRIDE\n${COMMIT_OVERRIDE}\nEND_COMMIT_OVERRIDE"\
-            --base main \
-            --head $PR_BRANCH \
-            --assignee "${{ github.event.pull_request.merged_by.login }}" \
-            --label "Enable Test"
+          --title "chore: sync release ${RELEASE_TAG} to main branch" \
+          --body "$(cat body)" \
+          --base main \
+          --head $PR_BRANCH \
+          --assignee '${{ github.event.pull_request.merged_by.login }}' \
+          --label 'Enable Test'
       
       - name: create pull request for patch release
-        if: "!endsWith(env.RELEASE_TAG, '.0')"
+        if: ${{ ! endsWith(env.RELEASE_TAG, '.0') }}
         run: |
           COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only origin/main...${PR_BRANCH} | grep -v "commit" | grep -v "chore: release")
+
+          echo "# Description" >> body
+          echo "" >> body
+          echo "Syncing patch release ${RELEASE_TAG} to main branch" >> body
+          echo "" >> body
+          echo "**↓↓ Please review and edit commit overrides before merging ↓↓**" >> body
+          echo "" >> body
+          echo "BEGIN_COMMIT_OVERRIDE" >> body
+          echo "${COMMIT_OVERRIDE}" >> body
+          echo "END_COMMIT_OVERRIDE" >> body
+          
           gh pr create \
-            --title "chore: sync patch release ${RELEASE_NUMBER} to main branch" \
-            --body "# Description\n\nSyncing patch release ${RELEASE_NUMBER} to main branch\n\nBEGIN_COMMIT_OVERRIDE\n${COMMIT_OVERRIDE}\nEND_COMMIT_OVERRIDE"\
-            --base main \
-            --head $PR_BRANCH \
-            --assignee "${{ github.event.pull_request.merged_by.login }}" \
-            --label "Enable Test"
+          --title "chore: sync release ${RELEASE_TAG} to main branch" \
+          --body "$(cat body)" \
+          --base main \
+          --head $PR_BRANCH \
+          --assignee '${{ github.event.pull_request.merged_by.login }}' \
+          --label 'Enable Test'
