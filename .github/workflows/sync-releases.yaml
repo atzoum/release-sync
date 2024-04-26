@@ -51,14 +51,14 @@ jobs:
           echo "" >> body
           echo "**WARNING: Do NOT rewrite git history and ALWAYS use a \"Merge Commit\" for merging!*" >> body
           echo "" >> body
-          echo "**↓↓ Please review commit overrides before merging ↓↓**" >> body
+          echo "**↓↓ Please review and edit commit overrides before merging ↓↓**" >> body
           echo "" >> body
           echo "BEGIN_COMMIT_OVERRIDE" >> body
           echo "${COMMIT_OVERRIDE}" >> body
           echo "END_COMMIT_OVERRIDE" >> body
           
           gh pr create \
-          --title 'chore: sync release ${RELEASE_TAG} to main branch' \
+          --title "chore: sync release ${RELEASE_TAG} to main branch" \
           --body "$(cat body)" \
           --base main \
           --head $PR_BRANCH \
@@ -74,14 +74,14 @@ jobs:
           echo "" >> body
           echo "Syncing patch release ${RELEASE_TAG} to main branch" >> body
           echo "" >> body
-          echo "**↓↓ Please review commit overrides before merging ↓↓**" >> body
+          echo "**↓↓ Please review and edit commit overrides before merging ↓↓**" >> body
           echo "" >> body
           echo "BEGIN_COMMIT_OVERRIDE" >> body
           echo "${COMMIT_OVERRIDE}" >> body
           echo "END_COMMIT_OVERRIDE" >> body
           
           gh pr create \
-          --title 'chore: sync patch release ${RELEASE_TAG} to main branch' \
+          --title "chore: sync release ${RELEASE_TAG} to main branch" \
           --body "$(cat body)" \
           --base main \
           --head $PR_BRANCH \

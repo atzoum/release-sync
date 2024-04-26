@@ -34,10 +34,11 @@ jobs:
         run: |
           echo "# Description" >> body
           echo "" >> body
-          echo "Syncing #${{ github.event.pull_request.number }} to main branch" >> body
+          echo "Syncing #${{ github.event.pull_request.number }} from ${{github.event.pull_request.base.ref}} to main branch" >> body
+          echo "" >> body
           
           gh pr create \
-          --title 'chore: sync #${{ github.event.pull_request.number }} to main branch' \
+          --title "chore: sync #${{ github.event.pull_request.number }} from ${{github.event.pull_request.base.ref}} to main branch" \
           --body "$(cat body)" \
           --base main \
           --head $PR_BRANCH \
