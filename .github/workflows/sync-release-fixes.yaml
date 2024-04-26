@@ -33,9 +33,12 @@ jobs:
       - name: create pull request
         run: |
           gh pr create \
-            --title "chore: sync #${{ github.event.pull_request.number }} to main branch" \
-            --body "# Description\n\nSyncing #${{ github.event.pull_request.number }} to main branch"\
-            --base main \
-            --head $PR_BRANCH \
-            --assignee "${{ github.event.pull_request.user.login }}" \
-            --label "Enable Test"
+          --title "chore: sync #${{ github.event.pull_request.number }} to main branch" \
+          --body '# Description
+          
+          Syncing #${{ github.event.pull_request.number }} to main branch
+          '\
+          --base main \
+          --head $PR_BRANCH \
+          --assignee "${{ github.event.pull_request.user.login }}" \
+          --label "Enable Test"
