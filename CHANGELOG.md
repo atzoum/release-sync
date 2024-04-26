@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/atzoum/release-sync/compare/v1.0.1...v1.0.2) (2024-04-26)
+
+
+### Bug Fixes
+
+* missing echo ([#19](https://github.com/atzoum/release-sync/issues/19)) ([1a1eef7](https://github.com/atzoum/release-sync/commit/1a1eef7d28a4172588e217d3e91933bc5e317054))
+
 ## [1.0.1](https://github.com/atzoum/release-sync/compare/v1.0.0...v1.0.1) (2024-04-26)
 
 
