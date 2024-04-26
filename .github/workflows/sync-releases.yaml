@@ -39,17 +39,20 @@ jobs:
         if: ${{ endsWith(env.RELEASE_TAG, '.0') }}
         run: |
           COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only ${PR_BRANCH}...origin/main |grep -v "commit")
+          
+          echo "# Description" >> body
+          echo "" >> body
+          echo "Syncing release ${RELEASE_NUMBER} to main branch" >> body
+          echo "" >> body
+          echo "**WARNING:** this needs to be merged using a **Merge Commit**" >> body
+          echo "" >> body
+          echo "${COMMIT_OVERRIDE}" >> body
+          echo "BEGIN_COMMIT_OVERRIDE" >> body
+          echo "END_COMMIT_OVERRIDE" >> body
+          
           gh pr create \
           --title 'chore: sync release ${RELEASE_NUMBER} to main branch' \
-          --body '# Description' \
-          --body '' \
-          --body 'Syncing release ${RELEASE_NUMBER} to main branch' \
-          --body '' \
-          --body '**WARNING:** this needs to be merged using a **Merge Commit**' \
-          --body '' \
-          --body 'BEGIN_COMMIT_OVERRIDE' \
-          --body '${COMMIT_OVERRIDE}' \
-          --body 'END_COMMIT_OVERRIDE' \
+          --body "$(cat body)" \
           --base main \
           --head $PR_BRANCH \
           --assignee '${{ github.event.pull_request.merged_by.login }}' \
@@ -59,15 +62,18 @@ jobs:
         if: ${{ ! endsWith(env.RELEASE_TAG, '.0') }}
         run: |
           COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only origin/main...${PR_BRANCH} | grep -v "commit" | grep -v "chore: release")
+
+          echo "# Description" >> body
+          echo "" >> body
+          echo "Syncing patch release ${RELEASE_NUMBER} to main branch" >> body
+          echo "" >> body
+          echo "${COMMIT_OVERRIDE}" >> body
+          echo "BEGIN_COMMIT_OVERRIDE" >> body
+          echo "END_COMMIT_OVERRIDE" >> body
+          
           gh pr create \
           --title 'chore: sync patch release ${RELEASE_NUMBER} to main branch' \
-          --body '# Description' \
-          --body '' \
-          --body 'Syncing patch release ${RELEASE_NUMBER} to main branch' \
-          --body '' \
-          --body 'BEGIN_COMMIT_OVERRIDE' \
-          --body '${COMMIT_OVERRIDE}' \
-          --body 'END_COMMIT_OVERRIDE' \
+          --body "$(cat body)" \
           --base main \
           --head $PR_BRANCH \
           --assignee '${{ github.event.pull_request.merged_by.login }}' \
