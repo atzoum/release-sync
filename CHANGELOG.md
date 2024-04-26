@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.1.0-rc.1](https://github.com/atzoum/release-sync/compare/v1.0.4...v1.1.0-rc.1) (2024-04-26)
+
+
+### Features
+
+* hello now says 3 ([#31](https://github.com/atzoum/release-sync/issues/31)) ([4465b46](https://github.com/atzoum/release-sync/commit/4465b46a80bba27506eb1fa78c9c79cc0043483d))
+
+
+### Bug Fixes
+
+* body from file ([#12](https://github.com/atzoum/release-sync/issues/12)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* change hello 1 to hello 2 ([#3](https://github.com/atzoum/release-sync/issues/3)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* fixes ([#23](https://github.com/atzoum/release-sync/issues/23)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* missing echo ([#19](https://github.com/atzoum/release-sync/issues/19)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* multiple bodies ([#10](https://github.com/atzoum/release-sync/issues/10)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* texts ([#27](https://github.com/atzoum/release-sync/issues/27)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* wait for release ([#16](https://github.com/atzoum/release-sync/issues/16)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+
+
+### Miscellaneous
+
+* multiline body ([#14](https://github.com/atzoum/release-sync/issues/14)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+
 ## [1.0.4](https://github.com/atzoum/release-sync/compare/v1.0.3...v1.0.4) (2024-04-26)
 
 
