@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/atzoum/release-sync/compare/v1.2.0...v1.3.0) (2024-04-26)
+
+
+### Features
+
+* simple names ([ef8da3a](https://github.com/atzoum/release-sync/commit/ef8da3a03a9642af04c2b67410dcb77368557f8a))
+* simple names ([#41](https://github.com/atzoum/release-sync/issues/41)) ([e52c627](https://github.com/atzoum/release-sync/commit/e52c627d0127451f471f83490f63befac21bd9e1))
+
+
+### Miscellaneous
+
+* sync release v1.2.0 to main branch ([#40](https://github.com/atzoum/release-sync/issues/40)) ([4190595](https://github.com/atzoum/release-sync/commit/419059573349ebf8d2e423ffabc1496934a3de9c))
+
 ## [1.2.0](https://github.com/atzoum/release-sync/compare/v1.0.4...v1.2.0) (2024-04-26)
 
 
