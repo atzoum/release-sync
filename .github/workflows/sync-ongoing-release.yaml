@@ -1,4 +1,4 @@
-name: Sync ongoing release
+name: sync ongoing release
 
 on:
   pull_request:
