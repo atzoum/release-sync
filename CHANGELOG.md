@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.2.0](https://github.com/atzoum/release-sync/compare/v1.0.4...v1.2.0) (2024-04-26)
+
+
+### Features
+
+* hello now says 3 ([#31](https://github.com/atzoum/release-sync/issues/31)) ([4465b46](https://github.com/atzoum/release-sync/commit/4465b46a80bba27506eb1fa78c9c79cc0043483d))
+* say 4 ([#36](https://github.com/atzoum/release-sync/issues/36)) ([ba86cd1](https://github.com/atzoum/release-sync/commit/ba86cd11cc1147ad16acc3f068dcb22b54916bbe))
+
+
+### Bug Fixes
+
+* body from file ([#12](https://github.com/atzoum/release-sync/issues/12)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* change hello 1 to hello 2 ([#3](https://github.com/atzoum/release-sync/issues/3)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* fixes ([#23](https://github.com/atzoum/release-sync/issues/23)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* missing echo ([#19](https://github.com/atzoum/release-sync/issues/19)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* multiple bodies ([#10](https://github.com/atzoum/release-sync/issues/10)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* should be more enthusiastic ([#34](https://github.com/atzoum/release-sync/issues/34)) ([#35](https://github.com/atzoum/release-sync/issues/35)) ([2275f46](https://github.com/atzoum/release-sync/commit/2275f460651de5962421d2f4707519a3db443a79))
+* texts ([#27](https://github.com/atzoum/release-sync/issues/27)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* titles ([#38](https://github.com/atzoum/release-sync/issues/38)) ([bfb3dbe](https://github.com/atzoum/release-sync/commit/bfb3dbeda200d5cbeff4883b079a37674162e993))
+* wait for release ([#16](https://github.com/atzoum/release-sync/issues/16)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+
+
+### Miscellaneous
+
+* multiline body ([#14](https://github.com/atzoum/release-sync/issues/14)) ([7d9291f](https://github.com/atzoum/release-sync/commit/7d9291f27eff1ab9799a6f51bc98db9367401cc6))
+* release 1.2.0 ([b0ec43f](https://github.com/atzoum/release-sync/commit/b0ec43ff7e28907a6fb57824b03d993bd1cf63d8))
+
 ## [1.0.4](https://github.com/atzoum/release-sync/compare/v1.0.3...v1.0.4) (2024-04-26)
 
 
