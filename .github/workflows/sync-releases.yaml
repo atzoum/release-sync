@@ -25,7 +25,7 @@ jobs:
       
       - name: parse release tag
         run: |
-          while [ -n $(git describe --contains $MERGE_COMMIT_SHA && "ok" || "") ]; do
+          while [ -n $(git describe --contains $MERGE_COMMIT_SHA && echo "ok" || echo "") ]; do
             echo "waiting for release...";
             sleep 2
             git fetch --tags
