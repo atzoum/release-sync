@@ -43,20 +43,22 @@ jobs:
       - name: create pull request for major or minor release
         if: ${{ endsWith(env.RELEASE_TAG, '.0') }}
         run: |
-          COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only ${PR_BRANCH}...origin/main |grep -v "commit")
+          COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only ${PR_BRANCH}...origin/main | grep -v "commit" | grep -v "chore: sync #")
           
           echo "# Description" >> body
           echo "" >> body
-          echo "Syncing release ${RELEASE_NUMBER} to main branch" >> body
+          echo "Syncing release ${RELEASE_TAG} to main branch" >> body
           echo "" >> body
-          echo "**WARNING:** this needs to be merged using a **Merge Commit**" >> body
+          echo "**WARNING: Do NOT rewrite git history and ALWAYS use a \"Merge Commit\" for merging!*" >> body
           echo "" >> body
-          echo "${COMMIT_OVERRIDE}" >> body
+          echo "**↓↓ Please review commit overrides before merging ↓↓**" >> body
+          echo "" >> body
           echo "BEGIN_COMMIT_OVERRIDE" >> body
+          echo "${COMMIT_OVERRIDE}" >> body
           echo "END_COMMIT_OVERRIDE" >> body
           
           gh pr create \
-          --title 'chore: sync release ${RELEASE_NUMBER} to main branch' \
+          --title 'chore: sync release ${RELEASE_TAG} to main branch' \
           --body "$(cat body)" \
           --base main \
           --head $PR_BRANCH \
@@ -70,14 +72,16 @@ jobs:
 
           echo "# Description" >> body
           echo "" >> body
-          echo "Syncing patch release ${RELEASE_NUMBER} to main branch" >> body
+          echo "Syncing patch release ${RELEASE_TAG} to main branch" >> body
           echo "" >> body
-          echo "${COMMIT_OVERRIDE}" >> body
+          echo "**↓↓ Please review commit overrides before merging ↓↓**" >> body
+          echo "" >> body
           echo "BEGIN_COMMIT_OVERRIDE" >> body
+          echo "${COMMIT_OVERRIDE}" >> body
           echo "END_COMMIT_OVERRIDE" >> body
           
           gh pr create \
-          --title 'chore: sync patch release ${RELEASE_NUMBER} to main branch' \
+          --title 'chore: sync patch release ${RELEASE_TAG} to main branch' \
           --body "$(cat body)" \
           --base main \
           --head $PR_BRANCH \
