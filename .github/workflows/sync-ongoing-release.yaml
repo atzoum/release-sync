@@ -1,4 +1,4 @@
-name: Sync release fix commits to main branch
+name: Sync ongoing release
 
 on:
   pull_request:
