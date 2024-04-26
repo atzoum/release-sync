@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/atzoum/release-sync/compare/v1.0.2...v1.0.3) (2024-04-26)
+
+
+### Bug Fixes
+
+* fixes ([#23](https://github.com/atzoum/release-sync/issues/23)) ([270b5c6](https://github.com/atzoum/release-sync/commit/270b5c681fd57939ae45e3836ac0d3f3dfcd3678))
+
 ## [1.0.2](https://github.com/atzoum/release-sync/compare/v1.0.1...v1.0.2) (2024-04-26)
 
 
