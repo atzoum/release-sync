@@ -38,7 +38,7 @@ jobs:
           
           gh pr create \
           --title 'chore: sync #${{ github.event.pull_request.number }} to main branch' \
-          --body "$(cat body)"
+          --body "$(cat body)" \
           --base main \
           --head $PR_BRANCH \
           --assignee "${{ github.event.pull_request.user.login }}" \
