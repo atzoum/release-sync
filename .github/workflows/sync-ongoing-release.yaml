@@ -25,7 +25,7 @@ jobs:
       
       - name: create branch
         run: |
-          PR_BRANCH="sync-release-fixes-${MERGE_COMMIT_SHA}"
+          PR_BRANCH="sync-ongoing-release-${MERGE_COMMIT_SHA}"
           echo "PR_BRANCH=$PR_BRANCH" >> "$GITHUB_ENV"
           git checkout $MERGE_COMMIT_SHA -b $PR_BRANCH
           git push origin $PR_BRANCH
