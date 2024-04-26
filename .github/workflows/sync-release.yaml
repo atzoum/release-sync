@@ -1,4 +1,4 @@
-name: Sync releases to main branch
+name: Sync release
 
 on:
   pull_request:
