@@ -40,37 +40,35 @@ jobs:
         run: |
           COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only ${PR_BRANCH}...origin/main |grep -v "commit")
           gh pr create \
-          --title "chore: sync release ${RELEASE_NUMBER} to main branch" \
-          --body '# Description
-          
-          Syncing release ${RELEASE_NUMBER} to main branch
-          
-          **WARNING:** this needs to be merged using a **Merge Commit**
-          
-          BEGIN_COMMIT_OVERRIDE
-          ${COMMIT_OVERRIDE}
-          END_COMMIT_OVERRIDE
-          '\
+          --title 'chore: sync release ${RELEASE_NUMBER} to main branch' \
+          --body '# Description' \
+          --body '' \
+          --body 'Syncing release ${RELEASE_NUMBER} to main branch' \
+          --body '' \
+          --body '**WARNING:** this needs to be merged using a **Merge Commit**' \
+          --body '' \
+          --body 'BEGIN_COMMIT_OVERRIDE' \
+          --body '${COMMIT_OVERRIDE}' \
+          --body 'END_COMMIT_OVERRIDE' \
           --base main \
           --head $PR_BRANCH \
-          --assignee "${{ github.event.pull_request.merged_by.login }}" \
-          --label "Enable Test"
+          --assignee '${{ github.event.pull_request.merged_by.login }}' \
+          --label 'Enable Test'
       
       - name: create pull request for patch release
         if: ${{ ! endsWith(env.RELEASE_TAG, '.0') }}
         run: |
           COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only origin/main...${PR_BRANCH} | grep -v "commit" | grep -v "chore: release")
           gh pr create \
-          --title "chore: sync patch release ${RELEASE_NUMBER} to main branch" \
-          --body '# Description
-          
-          Syncing patch release ${RELEASE_NUMBER} to main branch
-          
-          BEGIN_COMMIT_OVERRIDE
-          ${COMMIT_OVERRIDE}
-          END_COMMIT_OVERRIDE
-          '\
+          --title 'chore: sync patch release ${RELEASE_NUMBER} to main branch' \
+          --body '# Description' \
+          --body '' \
+          --body 'Syncing patch release ${RELEASE_NUMBER} to main branch' \
+          --body '' \
+          --body 'BEGIN_COMMIT_OVERRIDE' \
+          --body '${COMMIT_OVERRIDE}' \
+          --body 'END_COMMIT_OVERRIDE' \
           --base main \
           --head $PR_BRANCH \
-          --assignee "${{ github.event.pull_request.merged_by.login }}" \
-          --label "Enable Test"
+          --assignee '${{ github.event.pull_request.merged_by.login }}' \
+          --label 'Enable Test'
