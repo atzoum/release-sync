@@ -13,6 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
       - name: parse commit
         run: |
           MERGE_COMMIT_SHA=$(gh pr view ${{ github.event.pull_request.number }} --json mergeCommit -q .mergeCommit.oid)
@@ -23,17 +28,11 @@ jobs:
           RELEASE_TAG=$(git describe --contains $MERGE_COMMIT_SHA)
           echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
       
-      - name: checkout commit
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ env.MERGE_COMMIT_SHA }}
-          fetch-depth: 0
-      
       - name: create branch
         run: |
           PR_BRANCH="sync-release-fixes-${MERGE_COMMIT_SHA}"
           echo "PR_BRANCH=$PR_BRANCH" >> "$GITHUB_ENV"
-          git checkout -b $PR_BRANCH
+          git checkout $MERGE_COMMIT_SHA -b $PR_BRANCH
           git push origin $PR_BRANCH
       
       - name: create pull request for major or minor release
