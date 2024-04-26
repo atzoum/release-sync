@@ -43,7 +43,7 @@ jobs:
       - name: create pull request for major or minor release
         if: ${{ endsWith(env.RELEASE_TAG, '.0') }}
         run: |
-          COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only ${PR_BRANCH}...origin/main | grep -v "commit" | grep -v "chore: sync #")
+          COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only ${PR_BRANCH}...origin/main | grep -v "commit" | grep -v "chore: sync #" || echo "")
           
           echo "# Description" >> body
           echo "" >> body
@@ -68,7 +68,7 @@ jobs:
       - name: create pull request for patch release
         if: ${{ ! endsWith(env.RELEASE_TAG, '.0') }}
         run: |
-          COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only origin/main...${PR_BRANCH} | grep -v "commit" | grep -v "chore: release")
+          COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only origin/main...${PR_BRANCH} | grep -v "commit" | grep -v "chore: release" || echo "")
 
           echo "# Description" >> body
           echo "" >> body
