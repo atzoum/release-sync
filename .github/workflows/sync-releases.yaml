@@ -9,7 +9,7 @@ jobs:
   sync:
     env:
       GH_TOKEN: ${{ secrets.PAT }}
-    if: "github.event.pull_request.merged && startsWith(github.event.pull_request.base.ref, 'release/') && startsWith(github.event.pull_request.title, 'chore: release')"
+    if: ${{ github.event.pull_request.merged && startsWith(github.event.pull_request.base.ref, 'release/') && startsWith(github.event.pull_request.title, 'chore: release') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +37,7 @@ jobs:
           git push origin $PR_BRANCH
       
       - name: create pull request for major or minor release
-        if: "endsWith(env.RELEASE_TAG, '.0')"
+        if: ${{ endsWith(env.RELEASE_TAG, '.0') }}
         run: |
           COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only ${PR_BRANCH}...origin/main |grep -v "commit")
           gh pr create \
@@ -49,7 +49,7 @@ jobs:
             --label "Enable Test"
       
       - name: create pull request for patch release
-        if: "!endsWith(env.RELEASE_TAG, '.0')"
+        if: ${{ ! endsWith(env.RELEASE_TAG, '.0') }}
         run: |
           COMMIT_OVERRIDE=$(git rev-list --reverse --pretty="%s" --cherry-pick --right-only origin/main...${PR_BRANCH} | grep -v "commit" | grep -v "chore: release")
           gh pr create \
