@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.4.0](https://github.com/atzoum/release-sync/compare/v1.3.0...v1.4.0) (2024-04-29)
+
+
+### Features
+
+* hello 5 ([2b0bf53](https://github.com/atzoum/release-sync/commit/2b0bf53d404f3239e61abd00408c8794f6c9c6b3))
+
+
+### Bug Fixes
+
+* fixing some bug ([#47](https://github.com/atzoum/release-sync/issues/47)) ([0a11abb](https://github.com/atzoum/release-sync/commit/0a11abbf81e236294226e9d520fa296ca0b2c82f))
+
+
+### Miscellaneous
+
+* branch name ([15a227c](https://github.com/atzoum/release-sync/commit/15a227c9771c27229a7095c283908eaceb309a67))
+* do something in the meantime ([ea34ff6](https://github.com/atzoum/release-sync/commit/ea34ff606404f5c00d7b8b97e4154298ae1cb2c6))
+* do something in the meantime ([9b8d149](https://github.com/atzoum/release-sync/commit/9b8d149972871dbd28ec8ed7c5368135448fedee))
+* typos ([e029eb9](https://github.com/atzoum/release-sync/commit/e029eb92449bcfd2c849b4b4423485042bd602f4))
+
 ## [1.3.0](https://github.com/atzoum/release-sync/compare/v1.2.0...v1.3.0) (2024-04-26)
 
 
